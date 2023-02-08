@@ -13,12 +13,14 @@ var corsOptions = {
 }
 
 const userRouter = require('./routes/userRoutes.js');
+const imageRouter = require('./routes/imageRoutes.js');
 
 const middle404 = require('./middlewares/error404.js');
 
 app.use(express.json());
 app.use(cors(corsOptions));
 app.use('/api',userRouter);
+app.use('/api/image',imageRouter);
 app.use(cookieParser());
 
 
