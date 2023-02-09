@@ -1,9 +1,11 @@
 import React,{useEffect,useContext} from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { userContext } from '../context/userContext';
+import { userContext } from '../../context/userContext';
 import jwt from 'jwt-decode';
-import axios from 'axios'
+import axios from 'axios';
+import SideBar from "./sidebar";
+import SidebarUnlogged from './sidebarUnlogged';
 
 function Header() {
   const { userLogged, setUserLogged } = useContext(userContext);
@@ -15,11 +17,11 @@ function Header() {
             const userToken = seeUser.data.msg.substr(6, seeUser.data.msg.length);
 
             const user = await jwt(userToken);
-            await setUserLogged(user.name);
-           
+            await setUserLogged(user);
+            
         }
         catch (error) {
-           await setUserLogged("");
+           await setUserLogged({});
         }
     }
     checkUser();
@@ -32,7 +34,9 @@ function Header() {
           <span className="hover-text" aria-hidden="true">&nbsp;FavImages&nbsp;</span>
         </Link>
       </div>
+      {userLogged.name?<SideBar pageWrapId={"page-wrap"} outerContainerId={"navContainer"} />:<SidebarUnlogged pageWrapId={"page-wrap"} outerContainerId={"navContainer"} />}
     </Container>
+
   )
 }
 
@@ -46,7 +50,7 @@ const Container = styled.div`
   border: none;
 }
 
-/* button styling */
+
 .button {
   --border-right: 6px;
   --text-stroke-color: rgba(0, 0, 0, 0.6);
@@ -61,7 +65,7 @@ const Container = styled.div`
   color: transparent;
   -webkit-text-stroke: 1px var(--text-stroke-color);
 }
-/* this is the text, when you hover on button */
+
 .hover-text {
   position: absolute;
   box-sizing: border-box;
@@ -74,11 +78,62 @@ const Container = styled.div`
   transition: 0.5s;
   -webkit-text-stroke: 1px var(--animation-color);
 }
-/* hover */
+
 .button:hover .hover-text {
   width: 100%;
   filter: drop-shadow(0 0 23px var(--animation-color))
 }
+
+.bm-burger-button {
+    position: relative;
+    width: 36px;
+    height: 30px;
+    left: 36px;
+    top: 10px;
+  }
+  .bm-burger-bars {
+    background: #373a47;
+  }
+  .bm-cross-button {
+    height: 30px;
+    width: 30px;
+    margin-top: 60px;
+  }
+  .bm-cross {
+    background: #2e5764;
+  }
+  .bm-menu {
+    background-image: linear-gradient(to bottom, #3aa8e3dc, #689dc9c1, #c9d8e897, #e0e9f234, #ffffff08);
+    padding: 10px;
+    font-size: 1.15em;
+    margin-top: 60px;
+    height: 10px;
+    border-radius: 30px 30px 10px 0px;
+    overflow: hidden;
+    a{
+      text-decoration: none;
+      color: white;
+      margin: 20px;
+      padding: 15px;
+    }
+    a:hover{
+      background: #79befe;
+      border-radius: 10px;
+    }
+  }
+  .bm-menu::-webkit-scrollbar{
+    display: none;
+  }
+  .bm-morph-shape {
+    fill: #373a4700;
+  }
+  .bm-item-list {
+    color: #b8b7ad;
+    margin-top: 40px;
+  }
+  .bm-overlay {
+    display: none;
+  }
 `
 
 export default Header

@@ -6,7 +6,7 @@ import {userContext} from "../context/userContext";
 import { Link } from "react-router-dom";
 import jwt from 'jwt-decode';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-
+import styled from "styled-components";
 
 const Login = ()=>{
   const {register,formState:{errors},handleSubmit} = useForm();
@@ -21,7 +21,7 @@ const Login = ()=>{
       const userToken = seeUser.data.msg.substr(6, seeUser.data.msg.length);
 
       const user = await jwt(userToken);
-      await setUserLogged(user.name);
+      await setUserLogged(user);
       return user;
     }
     catch(error){
@@ -36,7 +36,7 @@ const Login = ()=>{
          user?navigate('/'):console.log("no user logged")
       }
       catch (error) {
-         await setUserLogged("");
+         await setUserLogged({});
       }
   }
   checkUser();
@@ -71,7 +71,8 @@ const Login = ()=>{
   return(
     <>
       
-      <form data-aos="fade-left"  data-aos-duration="2000" className="createForm" onSubmit={handleSubmit(onSubmit)}>
+     <Container>
+     <form data-aos="fade-left"  data-aos-duration="2000" className="createForm" onSubmit={handleSubmit(onSubmit)}>
         <h1 className="loginTitle">Login</h1>   
         <label htmlFor="">Email:</label>
         <input type="text" {
@@ -85,11 +86,17 @@ const Login = ()=>{
             required:true,
             minLength:3
           })}/>{errors.email?.type==='required'&& <p>El campo 'Contraseña' es requerido</p>}
-          <input className="sendCreate" type="submit" value="Login" />
+          <input className="sendCreate" type="submit" value="Iniciar sesión" />
       </form>
-      <Link to={'/signup'}>Boton</Link>
+      <label htmlFor="">¿Aún no tienes cuenta?</label>
+      <Link to={'/signup'}>Crear cuenta</Link>
+     </Container>
     </>
   )
 }
+
+const Container = styled.div`
+  
+`
 
 export default Login;
