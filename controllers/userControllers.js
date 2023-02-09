@@ -41,6 +41,7 @@ const login = async(req,res)=>{
                 const userForToken = {
                     email:userData[0].email,
                     name:userData[0].name,
+                    id:userData[0].id,
                     check:true
                 }
                 const token  = await jwt.sign(userForToken,process.env.SECRET_TOKEN,{

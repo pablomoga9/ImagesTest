@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import {userContext} from "../context/userContext";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import AOS from 'aos';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import jwt from 'jwt-decode';
 import 'aos/dist/aos.css';
 AOS.init();
@@ -21,7 +23,7 @@ function Signup() {
       const userToken = seeUser.data.msg.substr(6, seeUser.data.msg.length);
 
       const user = await jwt(userToken);
-      await setUserLogged(user.name);
+      await setUserLogged(user);
       return user;
     }
     catch(error){
@@ -61,6 +63,7 @@ function Signup() {
   return (
     <>
      
+    <Container>
     <form data-aos="fade-left"  data-aos-duration="2000" className="createForm" onSubmit={handleSubmit(onSubmit)}>
       <h1 className="loginTitle">Registro</h1>
       <label htmlFor="">Escribe un email: </label>
@@ -83,9 +86,16 @@ function Signup() {
         })}/>{errors.email?.type==='required'&& <p>El campo 'Contraseña' es requerido</p>}
       <input className="sendCreate" type="submit" value="Crear" />
     </form>
+    <label htmlFor="">¿Ya tienes una cuenta creada?</label>
+    <Link to="/login">Iniciar sesión</Link>
+    </Container>
    
   </>
   )
 }
+
+const Container = styled.div`
+  
+`
 
 export default Signup

@@ -13,10 +13,21 @@ const getImages = async(id)=>{
     }
 }
 
+const getAllImages = async()=>{
+    try{
+        const data = await pool.query(queries.getAllImages);
+        const results = data.rows;
+        return results;
+    }
+    catch(error){
+        console.log(error.stack);
+    }
+}
+
 const createImage = async(body)=>{
     try{
-        const {url,description,id_user,date} = body;
-        const data = await pool.query(queries.createImage,[url,description,id_user,date]);
+        const {url,description,user_id,date_created,title} = body;
+        const data = await pool.query(queries.createImage,[url,description,user_id,date_created,title]);
         const results = data.rows;
         return results;
     }
@@ -52,5 +63,6 @@ module.exports = {
     getImages,
     createImage,
     deleteImage,
-    updateImage
+    updateImage,
+    getAllImages
 }
