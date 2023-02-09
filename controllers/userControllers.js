@@ -4,6 +4,7 @@ const saltRounds = 10;
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
+
 const signup = async(req,res)=>{
     try{    
         const hashPassword = bcrypt.hashSync(req.body.password,saltRounds);
@@ -41,6 +42,8 @@ const login = async(req,res)=>{
                 const userForToken = {
                     email:userData[0].email,
                     name:userData[0].name,
+                    picture:userData[0].picture,
+                    description:userData[0].description,
                     id:userData[0].id,
                     check:true
                 }
@@ -85,7 +88,9 @@ const getUser = async(req,res)=>{
 
 const logout = async(req,res)=>{
     try{
-        return res.clearCookie("token")
+        
+        
+       res.clearCookie("token").redirect('/login');
     }
     catch(error){
         res.status(400).json({msg:'could not logout user'})

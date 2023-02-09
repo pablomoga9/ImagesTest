@@ -3,6 +3,7 @@ const imageModels = require('../models/imageModels');
 
 const getImages = async(req,res)=>{
     try{
+        
         const getImg = await imageModels.getImages(req.params);
         res.status(200).json(getImg)
     }
@@ -32,7 +33,7 @@ const createImage = async(req,res)=>{
 
 const deleteImage = async(req,res)=>{
     try{
-        const deleteImg = await imageModels.deleteImages(req.params);
+        const deleteImg = await imageModels.deleteImage(req.params);
     }   
     catch(error){
         res.status(400).json({msg:'could not delete image'});
@@ -41,11 +42,7 @@ const deleteImage = async(req,res)=>{
 
 const updateImage = async(req,res)=>{
     try{
-        const updateObj = {
-            ...req.body,
-            id:res.params
-        }
-        const updateImg = await imageModels.updateImage(updateObj)
+        const updateImg = await imageModels.updateImage(req.body)
         return updateImg;
     }  
     catch(error){

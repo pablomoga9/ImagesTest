@@ -4,8 +4,10 @@ const queries = require('./queries');
 
 const getImages = async(id)=>{
     try{
-        const data = await pool.query(queries.getImages,[id]);
+       
+        const data = await pool.query(queries.getImages,[id.id]);
         const results = data.rows;
+       
         return results;
     }
     catch(error){
@@ -26,8 +28,8 @@ const getAllImages = async()=>{
 
 const createImage = async(body)=>{
     try{
-        const {url,description,user_id,date_created,title} = body;
-        const data = await pool.query(queries.createImage,[url,description,user_id,date_created,title]);
+        const {url,description,user_id,date_created,title,user_name} = body;
+        const data = await pool.query(queries.createImage,[url,description,user_id,date_created,title,user_name]);
         const results = data.rows;
         return results;
     }
@@ -38,7 +40,7 @@ const createImage = async(body)=>{
 
 const deleteImage = async(id)=>{
     try{
-        const data = await pool.query(queries.deleteImage,[id]);
+        const data = await pool.query(queries.deleteImage,[id.id]);
         const results = data.rows;
         return results;
     }

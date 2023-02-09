@@ -4,7 +4,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import styled from 'styled-components';
-import Profiles from './pages/Profiles';
+import ProfileContainer from './pages/ProfileContainer';
 
 function Main() {
     
@@ -16,7 +16,7 @@ function Main() {
                     <Route element={<Home />} path='/' />
                     <Route element={<Login />} path='/login' />
                     <Route element={<Signup />} path='/signup' />
-                    <Route element={<Profiles/>} path='/profile/:id'/>
+                    <Route element={<ProfileContainer/>} path='/profile/:id'/>
                 </Routes>
             </main>
         </Container>

@@ -1,4 +1,4 @@
-import React,{useEffect,useContext} from 'react';
+import React, { useEffect, useContext, useReducer } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { userContext } from '../../context/userContext';
@@ -6,26 +6,38 @@ import jwt from 'jwt-decode';
 import axios from 'axios';
 import SideBar from "./sidebar";
 import SidebarUnlogged from './sidebarUnlogged';
+import { ownListContext } from '../../context/ownListContext';
 
 function Header() {
   const { userLogged, setUserLogged } = useContext(userContext);
+  const { ownList, setOwnList } = useContext(ownListContext);
+
+
+  
+
+
 
   useEffect(() => {
     const checkUser = async () => {
-        try {
-            const seeUser = await axios.get(`${process.env.REACT_APP_DOMAIN}/api/checkUser`, { withCredentials: true });
-            const userToken = seeUser.data.msg.substr(6, seeUser.data.msg.length);
+      try {
+        const seeUser = await axios.get(`${process.env.REACT_APP_DOMAIN}/api/checkUser`, { withCredentials: true });
+        const userToken = seeUser.data.msg.substr(6, seeUser.data.msg.length);
 
-            const user = await jwt(userToken);
-            await setUserLogged(user);
-            
-        }
-        catch (error) {
-           await setUserLogged({});
-        }
+        const user = await jwt(userToken);
+        await setUserLogged(user);
+
+      }
+      catch (error) {
+        await setUserLogged({});
+      }
     }
     checkUser();
-}, [])
+
+  }, [])
+
+  
+
+
   return (
     <Container>
       <div>
@@ -34,7 +46,8 @@ function Header() {
           <span className="hover-text" aria-hidden="true">&nbsp;FavImages&nbsp;</span>
         </Link>
       </div>
-      {userLogged.name?<SideBar pageWrapId={"page-wrap"} outerContainerId={"navContainer"} />:<SidebarUnlogged pageWrapId={"page-wrap"} outerContainerId={"navContainer"} />}
+      {userLogged.name ? <SideBar pageWrapId={"page-wrap"} outerContainerId={"navContainer"} /> : <SidebarUnlogged pageWrapId={"page-wrap"} outerContainerId={"navContainer"} />}
+      {userLogged.name ? <h2>{userLogged.name}</h2> : null}
     </Container>
 
   )

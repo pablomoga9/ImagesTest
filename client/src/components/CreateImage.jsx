@@ -1,12 +1,17 @@
-import React,{useContext} from 'react';
+import React,{useContext,useReducer} from 'react';
 import { useForm } from 'react-hook-form';
 import axios from "axios";
 import styled from 'styled-components';
 import { userContext } from '../context/userContext';
+import { ownListContext } from '../context/ownListContext';
+import { useNavigate } from 'react-router-dom';
 
 function CreateImage() {
+    const [reducerValue,forceUpdate] = useReducer(x=>x+1,0)
     const { register, formState: { errors }, handleSubmit } = useForm();
     const {userLogged,setUserLogged} = useContext(userContext);
+    const {ownList,setOwnList} = useContext(ownListContext);
+    const navigate = useNavigate();
 
     const onSubmit = async (form) => {
         try {
@@ -14,11 +19,13 @@ function CreateImage() {
             let currentDate = new Date().toJSON().slice(0, 10);
             const newForm = {
                 ...form,
+                user_name:userLogged.name,
                 user_id:userLogged.id,
                 date_created:currentDate
             }
             const res = await axios.post(`${process.env.REACT_APP_DOMAIN}/api/image/createImage`, newForm);
-           
+            await setOwnList([...ownList,newForm])
+            forceUpdate();
         }
         catch (error) {
             console.log(error)
