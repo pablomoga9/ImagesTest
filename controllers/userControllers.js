@@ -62,6 +62,17 @@ const login = async(req,res)=>{
     }
 }
 
+
+const checkUser = async(req,res)=>{
+    try{
+        
+        res.status(200).json({msg:req.headers.cookie})
+    }
+    catch(error){
+        res.status(400).json({msg:"user not found"})
+    }
+}
+
 const getUser = async(req,res)=>{
     try{
         res.status(200).json({msg:req.headers.cookie})
@@ -84,5 +95,6 @@ module.exports = {
     signup,
     login,
     logout,
-    getUser
+    getUser,
+    checkUser
 }
