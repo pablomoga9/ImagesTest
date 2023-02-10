@@ -1,25 +1,35 @@
-import logo from './logo.svg';
+
 import './App.css';
+import React,{useState} from 'react';
+import Main from './Main';
+import Header from './components/Header/Header';
+import Footer from './components/Footer';
+import {BrowserRouter} from 'react-router-dom';
+import {userContext} from './context/userContext';
+import { ownListContext } from './context/ownListContext';
+
 
 function App() {
+  const [userLogged,setUserLogged] = useState({});
+  const [ownList,setOwnList] = useState([]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <userContext.Provider value={{userLogged,setUserLogged}}>
+          <ownListContext.Provider value={{ownList,setOwnList}}>
+           
+            <Header/>
+            <Main/>
+            
+            
+          </ownListContext.Provider>
+        </userContext.Provider>
+      </BrowserRouter>
     </div>
   );
 }
+
+
 
 export default App;

@@ -4,6 +4,7 @@ const saltRounds = 10;
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
+
 const signup = async(req,res)=>{
     try{    
         const hashPassword = bcrypt.hashSync(req.body.password,saltRounds);
@@ -41,6 +42,9 @@ const login = async(req,res)=>{
                 const userForToken = {
                     email:userData[0].email,
                     name:userData[0].name,
+                    picture:userData[0].picture,
+                    description:userData[0].description,
+                    id:userData[0].id,
                     check:true
                 }
                 const token  = await jwt.sign(userForToken,process.env.SECRET_TOKEN,{
@@ -62,6 +66,17 @@ const login = async(req,res)=>{
     }
 }
 
+
+const checkUser = async(req,res)=>{
+    try{
+        
+        res.status(200).json({msg:req.headers.cookie})
+    }
+    catch(error){
+        res.status(400).json({msg:"user not found"})
+    }
+}
+
 const getUser = async(req,res)=>{
     try{
         res.status(200).json({msg:req.headers.cookie})
@@ -73,10 +88,22 @@ const getUser = async(req,res)=>{
 
 const logout = async(req,res)=>{
     try{
-        return res.clearCookie("token")
+        
+        
+       res.clearCookie("token").redirect('/login');
     }
     catch(error){
         res.status(400).json({msg:'could not logout user'})
+    }
+}
+
+const updateUser = async(req,res)=>{
+    try{
+        const updateUs = await userModels.updateUser(req.body);
+        return updateUs;
+    }
+    catch(error){
+        res.status(400).json({msg:'could not find user'})
     }
 }
 
@@ -84,5 +111,7 @@ module.exports = {
     signup,
     login,
     logout,
-    getUser
+    getUser,
+    checkUser,
+    updateUser
 }
