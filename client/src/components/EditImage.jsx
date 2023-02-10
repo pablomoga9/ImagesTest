@@ -81,7 +81,28 @@ function EditImage(props){
 }
 
 const Container = styled.div`
-    
+    .editButtons{
+     margin-top: 20px;
+     display: flex;
+     flex-direction: row;
+     justify-content: center;
+     gap: 20px;
+     button{
+      padding: 10px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      background: #09afbb7b;
+      color: white;
+      font-weight: bold;
+      border: solid 2px green;
+      cursor: pointer;
+      transition: 1s ease;
+     }
+   button:hover{
+      background: #87e3ea79;
+      color: black;
+   }
+    }
 `
 
 export default EditImage;

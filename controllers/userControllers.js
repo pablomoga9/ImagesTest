@@ -97,10 +97,21 @@ const logout = async(req,res)=>{
     }
 }
 
+const updateUser = async(req,res)=>{
+    try{
+        const updateUs = await userModels.updateUser(req.body);
+        return updateUs;
+    }
+    catch(error){
+        res.status(400).json({msg:'could not find user'})
+    }
+}
+
 module.exports = {
     signup,
     login,
     logout,
     getUser,
-    checkUser
+    checkUser,
+    updateUser
 }

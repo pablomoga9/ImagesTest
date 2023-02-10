@@ -9,7 +9,7 @@ import uuid4 from 'uuid4';
 import ReactPaginate from 'react-paginate';
 
 function UserList() {
-  const itemsPerPage = 10;
+  const itemsPerPage = 5;
   const {ownList,setOwnList} = useContext(ownListContext);
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
@@ -48,13 +48,17 @@ function UserList() {
   return (
     <Container>
       <>
-          <ReactPaginate className="paginationItem"
+        
+        <CreateImage/>
+        
+        <h1>Tus imágenes</h1>
+        <ReactPaginate className="paginationItem"
         breakLabel="..."
-        nextLabel="next"
+        nextLabel="Siguiente"
         onPageChange={handlePageClick}
         pageRangeDisplayed={1}
         pageCount={pageCount}
-        previousLabel="previous"
+        previousLabel="Anterior"
         renderOnZeroPageCount={null}
         containerClassName="pagination"
         pageLinkClassName="page-num"
@@ -62,26 +66,65 @@ function UserList() {
         nextLinkClassName="page-num"
         activateLinkClassName="active"
       />
-        <CreateImage/>
-        <h1>Tus imágenes</h1>
+        <div className='homeList'>
         {currentItems.length>0?currentItems.map((item,i)=>{
-          return <div key={uuid4()}>
+          return <div className='homeListItem' key={uuid4()}>
             <h3>{item.title}</h3>
             <img src={item.url} alt="" />
-            <p>{item.date_created}</p>
-            <p>{item.description}</p>
+            <div className='itemText'>
+            <p><b>Fecha de publicación:</b> {item.date_created}</p>
+            <p><b>Descripción:</b> {item.description}</p>
+            </div>
             <div className='editButtons'>
               <EditImage key={i} data={item} remove={()=>deleteImage(i)}/>
             </div>
           </div>
-        }):null}
+        }):<h2>Aún no hay imágenes en tu perfil</h2>}
+        </div>
       </>
     </Container>
   )
 }
 
 const Container = styled.div`
-  
+  .homeList{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    .homeListItem{
+      background: #3fbfff46;
+      width: 90%;
+      margin: auto;
+      padding: 20px;
+      border-radius: 20px;
+      h3{
+
+      }
+      img{
+        width: 100%;
+        border-radius: 20px;
+      }
+      .itemText{
+        
+        display: flex;
+        flex-direction: row;
+        text-align: center;
+        border-radius: 0px 0px 20px 20px;
+        padding: 20px;
+        gap: 20px;
+        width: 90%;
+        top: 100%;
+        justify-content: center;
+        margin: auto;
+        background: #0233f8b9;
+        
+      }
+      p{
+        color: white;
+        margin: 0;
+      }
+    }
+  }
 
 `
 

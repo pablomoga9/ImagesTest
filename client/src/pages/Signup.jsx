@@ -84,7 +84,7 @@ function Signup() {
           required:true,
           minLength:3
         })}/>{errors.email?.type==='required'&& <p>El campo 'Contraseña' es requerido</p>}
-      <input className="sendCreate" type="submit" value="Crear" />
+      <input className="btn" type="submit" value="Crear" />
     </form>
     <label htmlFor="">¿Ya tienes una cuenta creada?</label>
     <Link to="/login">Iniciar sesión</Link>
@@ -95,7 +95,58 @@ function Signup() {
 }
 
 const Container = styled.div`
-  
+  form{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: auto;
+    gap: 25px;
+    label{
+      padding:10px;
+      background: #33eeff6b;
+      width: 50%;
+      margin: auto;
+      border-radius: 20px 20px 0px 0px;
+    }
+    input[type=text], input[type=password]{
+      padding: 15px;
+      border: 2px solid green;
+      background: #f1f1ff;
+      border-radius: 0px 0px 20px 20px;
+      font-size: 20px;
+      color: #064e06;
+    }
+    .btn{
+      padding: 20px;
+      background: #3fce3f77;
+      border-radius: 20px;
+      width: 50%;
+      margin: auto;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+      cursor: pointer;
+      transition: 1s ease;
+      border: solid 2px green;
+      margin-bottom: 15px;
+    }
+    .btn:hover{
+      background: #c2fdc277;
+      color: black;
+      border: solid 2px white;
+    }
+   
+   
+  }
+  a{
+      margin: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      color: green;
+    }
+    a:hover{
+      color: #63c063;
+    }
 `
 
 export default Signup

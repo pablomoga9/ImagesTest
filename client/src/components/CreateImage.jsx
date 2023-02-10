@@ -60,7 +60,46 @@ function CreateImage() {
 }
 
 const Container = styled.div`
-    
+    margin-top: 40px;
+    form{
+      background: #09afbb7b;
+      margin-top:30px;
+      padding: 15px;
+      border-radius: 20px 20px 0px 0px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 80%;
+      margin: auto;
+      input[type=text]{
+      padding: 10px;
+      border: 2px solid green;
+      background: #f1f1ff;
+      border-radius: 0px 0px 20px 20px;
+      font-size: 15px;
+      color: #064e06;
+    }
+    input[type=submit]{
+     
+      padding: 10px;
+      background: #3fce3f77;
+      border-radius: 20px;
+      width: 50%;
+      margin: auto;
+      color: white;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 1s ease;
+      border: solid 2px green;
+      margin-bottom: 15px;
+    }
+    input[type=submit]:hover{
+      background: #c2fdc277;
+      color: black;
+      border: solid 2px white;
+    }
+    }
 `
 
 export default CreateImage

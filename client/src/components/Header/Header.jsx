@@ -25,7 +25,7 @@ function Header() {
 
         const user = await jwt(userToken);
         await setUserLogged(user);
-
+        
       }
       catch (error) {
         await setUserLogged({});
@@ -46,15 +46,28 @@ function Header() {
           <span className="hover-text" aria-hidden="true">&nbsp;FavImages&nbsp;</span>
         </Link>
       </div>
+      <div className='headerUser'>
       {userLogged.name ? <SideBar pageWrapId={"page-wrap"} outerContainerId={"navContainer"} /> : <SidebarUnlogged pageWrapId={"page-wrap"} outerContainerId={"navContainer"} />}
-      {userLogged.name ? <h2>{userLogged.name}</h2> : null}
+      {userLogged.name ? <div className='picHeader'>
+        <img src={userLogged.picture} alt="" />
+        <h2>{userLogged.name}</h2>
+      </div> : null}
+      </div>
     </Container>
 
   )
 }
 
 const Container = styled.div`
-  
+
+  padding: 30px;
+  background: rgb(132, 255, 251);
+  background: linear-gradient(180deg, #74fffa 0%, rgba(175, 254, 255, 0.762) 52%, rgba(86, 210, 255, 0.152) 100%);
+  position: fixed;
+  width: 100%;
+  margin-top: 0;
+  z-index: 1;
+  top: 0;
   .button {
   margin: 0;
   height: auto;
@@ -67,7 +80,7 @@ const Container = styled.div`
 .button {
   --border-right: 6px;
   --text-stroke-color: rgba(0, 0, 0, 0.6);
-  --animation-color: #37afff;
+  --animation-color: #69c061d0;
   --fs-size: 2em;
   letter-spacing: 3px;
   text-decoration: none;
@@ -146,6 +159,26 @@ const Container = styled.div`
   }
   .bm-overlay {
     display: none;
+  }
+
+  .headerUser{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    .picHeader{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+      img{
+        max-width: 30px;
+        max-height: 30px;
+        border-radius: 120px;
+        background: #589e588e;
+        padding: 5px;
+      }
+    }
   }
 `
 
